@@ -29,16 +29,21 @@ vtarg=""
 display=""
 enable_xauth=1
 
-
 # Automatically determine an unused $DISPLAY
 d=0
 while true ; do
-    [ -e "/tmp/.X$d-lock" -o -S "/tmp/.X11-unix/X$d" ] || break
-    if kill -0 `cat /tmp/.X$d-lock` 2>/dev/null
+    if [ -e "/tmp/.X$d-lock" -o -S "/tmp/.X11-unix/X$d" ]
     then
-	REG ADD HKCU\\Software\\SimonTatham\\PuTTY\\Sessions\\Default%20Settings /v X11Display /d :$d /f
-    else
+	[ -e "/tmp/.X$d-lock" ] && FUSER="$(set -- $(/bin/ls -l /tmp/.X$d-lock); echo $3)"
+	#[ -e "/tmp/.X11-unix/X$d" ] && FUSER="$(set -- $(/bin/ls -l /tmp/.X11-unix/X$d); echo $3)"
+	if [ "${FUSER^^}" == "${USER^^}" ]
+	then
+	    REG ADD HKCU\\Software\\SimonTatham\\PuTTY\\Sessions\\Default%20Settings /v X11Display /d :$d /f
 	    break
+        fi
+#        kill -0 `cat /tmp/.X$d-lock` 2>/dev/null && break
+    else
+	break
     fi
     d=$(($d + 1))
 done
