@@ -31,3 +31,7 @@ PS1='\[\e]0;\w\a\]\n\[\e[32m\]\u@\h \[\e[33m\]\w\[\e[0m\]\n\$ '
 
 # Uncomment to use the terminal colours set in DIR_COLORS
 # eval "$(dircolors -b /etc/DIR_COLORS)"
+
+# Fixup git-bash in non login env
+#shopt -q login_shell || . /etc/profile.d/git-prompt.sh
+[ -f /etc/profile.d/git-prompt.sh ] && . /etc/profile.d/git-prompt.sh
