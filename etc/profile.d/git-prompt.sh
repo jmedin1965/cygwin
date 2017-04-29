@@ -1,6 +1,3 @@
-
-echo start git-prompt
-
 if test -f /etc/profile.d/git-sdk.sh
 then
 	TITLEPREFIX=SDK-${MSYSTEM#MINGW}
@@ -34,7 +31,3 @@ PS1="$PS1"'\[\033[0m\]'        # change color
 PS1="$PS1"'\n'                 # new line
 PS1="$PS1"'$ '                 # prompt: always $
 MSYS2_PS1="$PS1"               # for detection by MSYS2 SDK's bash.basrc
-
-echo $PS1
-echo done
-
